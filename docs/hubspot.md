@@ -20,9 +20,11 @@ Private app token in `.env` (`HUBSPOT_TOKEN`). Portal **148865690** (eu1, fresh 
 
 ## Current state (09/07 ~13:15) — READ ME, other Claude 👋
 
-**HubSpot is already seeded with the demo atlas: 23 companies live** (French aluminium-extrusion plants, public sources). Properties set per company: `siren` (join key for BOAMP/open data), `gtm_signal` (investment detail when known), `gtm_priority` (**7 hot / 5 warm / 11 watch**), domain (22/23), city, annualrevenue, description (type + legal entity + group).
+**HubSpot holds the demo atlas: 23 companies + 15 unique contacts (24 associations) with DELIVERABLE emails** (French aluminium-extrusion plants, public sources). Properties set per company: `siren` (join key for BOAMP/open data), `gtm_signal` (investment detail when known), `gtm_priority` (**7 hot / 5 warm / 11 watch**), domain (22/23), city, annualrevenue, description (type + legal entity + group).
 
 - Query the base: `POST /crm/v3/objects/companies/search` with filter `siren HAS_PROPERTY`
 - Hot queue: filter `gtm_priority EQ hot`
 - Seeder code + dataset: **PR #3** (`backend/ingest/seed_atlas.py`, re-runnable upsert by siren) — data is live in the portal regardless of merge status
 - Join your BOAMP signals on `siren`; Sillage watchlist should start from the 7 hot accounts
+
+**Contacts (09/07 pm):** FullEnrich run live on all 23 accounts — 11/23 companies have >=1 verified-email contact (group-level contacts like Hydro/Constellium are associated to each of their plants). 12 accounts in needs-manual (people found but no deliverable email, or no people found: mostly micro-sites). Script: `backend/enrich/enrich_hot.py --priority hot|warm|watch`. ~53 credits total spent, 2,452 left.
