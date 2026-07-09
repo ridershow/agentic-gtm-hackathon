@@ -19,7 +19,7 @@ The user is described in PITCH.md (persona lives there only). Live demo base: 23
 
 ## Engine = the skills (.claude/skills/ — SOT for behavior)
 
-`/goal` runs everything from one plain-language sentence: `atlas` (map 100% of the finite market, evidence per line, saturation stop rule) → `enrich-accounts` (FullEnrich decision-makers, credit-aware) → `signal-watch` (BOAMP ingest → Claude ICP scoring → Sillage → corroboration model → HubSpot priorities). **Read the skill before reimplementing anything it covers.**
+`/goal` runs everything from one plain-language sentence, chaining the three goals — each a loop: `territory-coverage` (map 100% of the finite market, evidence per line, saturation stop rule) → `company-enrichment` (waterfall FullEnrich → registry → Sillage, provenance-tagged, 2 retries max) → `signal-watcher` (Sillage + open data → Claude ICP scoring → corroboration model → HubSpot). **Read the skill before reimplementing anything it covers.**
 
 ## Run commands
 

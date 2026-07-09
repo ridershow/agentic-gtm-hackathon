@@ -1,5 +1,5 @@
 ---
-name: signal-watch
+name: signal-watcher
 description: Run the watch loop — pull fresh buying signals from BOAMP (public tenders), open data and Sillage, score them against the ICP, match them to atlas accounts, and update HubSpot (gtm_signal, gtm_priority, note). Use when asked to "check signals", "what moved", "run the watch", on any scheduled/managed-agent run, or as step 3 of /goal.
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: enrich-accounts
+name: company-enrichment
 description: Pull decision-makers (names, emails, phones) for atlas accounts via FullEnrich and write them into HubSpot as contacts associated to their company. Use after the atlas exists, when asked to "enrich accounts", "find the contacts", "get me the decision makers", or as step 2 of /goal. Credit-aware — emails by default, phones only for hot accounts.
 ---
 
