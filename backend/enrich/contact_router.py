@@ -138,6 +138,14 @@ def main():
             print(f"  + {x['first']} {x['last']} ({x['title']}) -> {x['company']} [{provenance}]"
                   + (f" <{email}>" if email else ""))
         print(f"\nregistry loop: {n_email} with email, {n_noemail} identity-only | credits after: {credits()['balance']}")
+        # close the loop: flag every atlas company covered / manual_search
+        n_manual = 0
+        for c in atlas_companies(client):
+            status = "covered" if contact_count(client, c["id"]) else "manual_search"
+            client.patch(f"{HS}/crm/v3/objects/companies/{c['id']}", headers=hs_headers(),
+                         json={"properties": {"gtm_contact_status": status}})
+            n_manual += status == "manual_search"
+        print(f"contact status set — {n_manual} companies flagged manual_search")
 
 
 if __name__ == "__main__":

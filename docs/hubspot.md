@@ -9,6 +9,7 @@ Private app token in `.env` (`HUBSPOT_TOKEN`). Portal **148865690** (eu1, fresh 
 | `gtm_signal` | textarea | Latest buying signal (BOAMP / open data / Sillage) |
 | `gtm_signal_date` | date | When the signal fired |
 | `gtm_priority` | select: hot / warm / watch | Agent ranking |
+| `gtm_contact_status` | select: covered / manual_search | Contact coverage after the enrichment waterfall |
 | `gtm_approach_draft` | textarea | UNUSED — outreach cut from product 09/07 pm (deliberate positioning choice). Property exists in portal, nothing writes it. |
 
 ## Core calls
@@ -31,4 +32,4 @@ Private app token in `.env` (`HUBSPOT_TOKEN`). Portal **148865690** (eu1, fresh 
 1. `backend/enrich/enrich_hot.py` — FullEnrich people-search + verified emails (provenance `people_search`, 15 contacts)
 2. `backend/enrich/contact_router.py` — registry loop for the rest: SIRENE dirigeants (auditors excluded) -> retry FullEnrich with the gérant's name -> push with provenance `registry` (email verified, 3) or `registry_no_email` (identity only, human finds the number, 11)
 
-Contact property `gtm_provenance` tells the rep what's verified vs to-confirm. Still empty: AFE Ham, Extol France, Koalis (registry lists corporate officers only — group-level entities; needs-manual). ~57 credits spent total, 2,448 left.
+Contact property `gtm_provenance` tells the rep what's verified vs to-confirm. Companies with no reachable contact are flagged `gtm_contact_status = manual_search` (4: AFE Saint-Florentin, AFE Ham, Extol, Koalis — registry lists corporate officers/auditors only). ~57 credits spent total, 2,448 left.
