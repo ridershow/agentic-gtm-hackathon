@@ -22,6 +22,10 @@ Docs: https://www.getsillage.com/docs/api (OpenAPI; every docs page has "Copy Ma
 
 Persona 469 (FR industrial decision-makers) · watchlist: 13/18 domains found (not found = the web-invisible micro-sites) · agents: **2693** capex FR keywords · **2694** four/énergie FR keywords · **2692** job-posting keywords · **2699** job updates. Connector: `backend/ingest/sillage_watch.py` (run | pull -> HubSpot).
 
-**All runs complete with 0 detections on this vertical** — the watched plants are LinkedIn-silent (= the product thesis; open data carries the signal load). MCP `get_setup_state` confirms everything green EXCEPT: contents feature 'not enabled for this workspace. Contact Sillage to enable it.' → ask the Sillage crew on site to flip the flag, then re-run `sillage_watch.py`.
+**Where the value flows: `GET /v1/workspace/leads`** — after account replace + `enrich-company-mapping` per domain (09/07 ~19h rebuild), Sillage produced persona-fit LEADS at watched accounts (plant/ops directors). Fed to HubSpot with provenance `sillage` / `sillage_enriched` (email resolved by FullEnrich). The full loop is: Sillage lead (who) -> FullEnrich (email) -> HubSpot.
+
+**Signal detections stay at 0 on this vertical** (plants are LinkedIn-silent = the product thesis; a transient count of 6141 during processing was not queryable — ask the Sillage crew). Still pending with Sillage on site: contents feature flag ('not enabled for this workspace') + persona PUT returns id 469 but GET keeps returning persona 428 (CRO default) as active.
+
+Gotcha: `enrich-company-mapping` 500s on web-invisible micro-sites (sudalu.fr, exal.fr, aviatube.com...) and 409s on domains already mapped — both non-blocking.
 
 Pipeline usage: `signal-watch` skill (corroboration model, priority rules).
