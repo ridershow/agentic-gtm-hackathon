@@ -26,3 +26,9 @@ Private app token in `.env` (`HUBSPOT_TOKEN`). Portal **148865690** (eu1, fresh 
 - Hot queue: filter `gtm_priority EQ hot`
 - Seeder code + dataset: **PR #3** (`backend/ingest/seed_atlas.py`, re-runnable upsert by siren) — data is live in the portal regardless of merge status
 - Join your BOAMP signals on `siren`; Sillage watchlist should start from the 7 hot accounts
+
+## Sync module (09/07 ~15:00)
+
+`python -m backend.sync.hubspot` pushes SQLite GTM output to the portal: orgs with >= 1 ICP-relevant signal become companies (match by `siren`, else exact name) with `gtm_signal`, `gtm_signal_date`, `gtm_priority` (max ICP score: >=70 hot / >=50 warm / else watch) and `gtm_approach_draft`; enriched contacts upsert by email + associate. `--dry-run` / `--limit N` / `--check` supported; re-runnable without duplicates (beware ~15s HubSpot search-index lag right after a create).
+
+**Portal heads-up:** 3 test BOAMP buyers synced (SPL Mobilités, Lycée Robert Garnier, CHU Lyon — all hot). The full local queue is **69 orgs (17 hot)** — run the bare command when we want them all in; it will triple the hot queue, so coordinate before demo screenshots.
