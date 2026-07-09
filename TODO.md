@@ -20,6 +20,7 @@
 ## Jerem
 
 - [x] BOAMP ingestion scaffold (signals table, SQLite/Postgres)
+- [x] Claude classification worker — live, 167 RFPs scored: 90 ICP-relevant, 35 hot (score ≥60). Re-run: `python -m backend.workers.classify`
 - [ ] Clean HubSpot + connectors management
 - [ ] Sillage intents from FullEnrich output → HubSpot
 
