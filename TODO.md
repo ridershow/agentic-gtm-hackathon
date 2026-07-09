@@ -19,9 +19,9 @@
 
 ## Jerem
 
-- [x] BOAMP ingestion scaffold (signals table, SQLite/Postgres)
+- [x] ~~BOAMP ingestion~~ — **KILLED 09/07 ~17h (Alex): no relevant tenders for this vertical.** Code stays in backend/ingest/boamp.py, unused. 3 public-buyer companies in HubSpot to archive manually (CHU Lyon, Lycée R. Garnier, SPL Mobilités).
 - [ ] Clean HubSpot + connectors management
-- [ ] Sillage intents from FullEnrich output → HubSpot
+- [x] Sillage wired end-to-end: persona + watchlist (13/18) + 4 agents + runs via API + HubSpot connector (`sillage_watch.py`). 0 detections on this vertical so far — question posée à l'équipe Sillage (403 content-requests + gating).
 
 ## Afternoon (shared, timeboxed)
 
