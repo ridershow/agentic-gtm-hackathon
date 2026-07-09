@@ -23,13 +23,13 @@ load_dotenv()
 
 MODEL = "claude-sonnet-4-6"
 
-ICP_CATEGORIES = ["equipment", "envelope", "installer", "services", "distributor"]
+ICP_CATEGORIES = ["equipment", "envelope", "installer", "services", "distributor", "thermique"]
 
 SYSTEM_PROMPT = """\
 Tu analyses des annonces de marchés publics français (BOAMP) pour un outil de prospection \
 destiné aux PME industrielles B2B qui vendent aux usines, entrepôts et bâtiments.
 
-Les 5 catégories de PME utilisatrices (ICP) :
+Les 6 catégories de PME utilisatrices (ICP) :
 - equipment : fabricants d'équipements industriels (rayonnages, portes industrielles, convoyeurs, \
 lignes d'emballage, levage, froid industriel). Cible : projets où de l'équipement sera acheté/installé.
 - envelope : spécialistes de l'enveloppe du bâtiment (sols industriels, toiture/bardage, quais de \
@@ -40,6 +40,10 @@ tuyauterie, ventilation, air comprimé). Cible : lots techniques, sous-traitance
 métrologie, rétrofit, efficacité énergétique). Cible : sites entrant en exploitation, renouvellements.
 - distributor : distributeurs techniques (fournitures industrielles, composants, EPI, consommables). \
 Cible : nouveaux sites dans leur zone de livraison.
+- thermique : fournisseurs de textiles techniques haute température, réfractaires, protections thermiques, \
+laine céramique, fibres céramiques, joints haute température, revêtements thermiques. \
+Cible : tout marché impliquant des procédés haute température (fonderie, extrusion aluminium, fours \
+industriels, verrerie, pétrochimie, traitement thermique).
 
 Pour chaque annonce, évalue la pertinence 0-100 par catégorie. Ne retourne que les catégories \
 avec un score >= 30. Une annonce sans lien avec le monde industriel/bâtiment (ex: prestations \
