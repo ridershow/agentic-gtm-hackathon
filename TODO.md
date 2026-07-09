@@ -13,7 +13,7 @@
 
 ## Alex
 
-- [ ] **Atlas** — NAF codes + annuaire + third-party sources → `organizations` table
+- [x] **Atlas (demo dataset)** — 23 FR extrusion plants seeded in HubSpot with siren/signals/priorities (PR #3, docs/hubspot.md). Full atlas *skill* rewrite in progress → `.claude/skills/`
 - [ ] **FullEnrich account mapping** — decision-makers per account → push into HubSpot
 - [ ] **Managed Agent** — monitoring + feeding, HubSpot bilateral read/write
 
