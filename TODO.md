@@ -7,7 +7,7 @@
 - [x] Team repo + push access (Alex ✅, Claude Code ✅)
 - [x] FullEnrich — key wired, tested live, 2,505 credits (`docs/fullenrich.md`)
 - [ ] Anthropic API keys — each redeems own $100 link (one code per org!) → `.env`
-- [ ] HubSpot — fresh portal (NOT a client's) + service key → `.env` — **Jerem**
+- [x] HubSpot — portal 148865690 + service key wired, smoke-tested, custom props created (`docs/hubspot.md`)
 - [ ] Sillage — team workspace at hackathon.getsillage.com + key + MCP connect — **Alex**
 - [ ] Gamma API key — **Alex**
 
