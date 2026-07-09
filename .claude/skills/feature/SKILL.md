@@ -13,7 +13,7 @@ description: Git branching workflow for this hackathon repo — branch-per-featu
 
 When someone describes new work (e.g. `/feature sillage intent scoring`), set them up on a fresh branch:
 
-1. **Check for uncommitted changes** (`git status`). If tracked files are modified or staged, don't silently drag them along — tell the user what's uncommitted and ask whether to commit it on the current branch first, bring it to the new branch, or stash it. Untracked files are fine — they follow along across checkouts; just proceed.
+1. **Check for uncommitted changes** (`git status`). If tracked files are modified or staged, don't silently drag them along — tell the user what's uncommitted and ask whether to commit it on the current branch first, bring it to the new branch, or park it. Resolve this *before* touching main: a dirty tree can make the checkout/pull below fail. To bring changes along, `git stash`, do step 2, then `git stash pop` on the new branch. Untracked files are fine — they follow along across checkouts; just proceed.
 2. **Branch off fresh main:**
    ```bash
    git checkout main && git pull origin main
