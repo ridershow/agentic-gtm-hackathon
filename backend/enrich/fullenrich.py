@@ -42,7 +42,7 @@ def _headers() -> dict:
     return {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
 
 
-def call(method: str, path: str, body: dict | None = None) -> dict:
+def call(method: str, path: str, body=None) -> dict:
     r = httpx.request(method, BASE + path, headers=_headers(), json=body, timeout=60)
     r.raise_for_status()
     return r.json()
