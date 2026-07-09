@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "sillage": {
+      "type": "http",
+      "url": "https://api.getsillage.com/api/mcp/v2",
+      "headers": {
+        "Authorization": "Bearer ${SILLAGE_API_KEY}"
+      }
+    },
+    "fullenrich": {
+      "type": "http",
+      "url": "https://mcp.fullenrich.com/mcp"
+    }
+  }
+}
