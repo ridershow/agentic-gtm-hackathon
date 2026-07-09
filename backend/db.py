@@ -1,4 +1,5 @@
-"""Database layer. Postgres (Supabase) via DATABASE_URL, SQLite fallback for local dev."""
+"""Local working store (SQLite, data/gtm.db): raw signals + classification queue.
+GTM output (accounts, contacts, outreach) syncs to HubSpot — see docs/hubspot.md."""
 
 import os
 from pathlib import Path
