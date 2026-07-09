@@ -102,13 +102,19 @@ The outreach email references a real, specific event: *"votre permis pour l'exte
 
 ---
 
+## Tech Stack (locked)
+
+- **Python + SQLAlchemy**; SQLite (`data/gtm.db`) as the local working store — raw signals + classification queue. Schema in `backend/db.py`.
+- **HubSpot CRM is the data store for GTM output** (mapped accounts, enriched contacts, outreach drafts) — portal 148865690, wired 09/07, see `docs/hubspot.md`. **Not Supabase** — that option is dropped.
+- FastAPI + Streamlit for the app/demo layer.
+
 ## Next Steps
 
 - [ ] Test Sillage API — actual coverage for French industrial companies
 - [ ] Test FullEnrich API — enrich a sample French industrial contact
 - [ ] Check SITADEL + ICPE data access — live API vs. dataset download
 - [ ] Test Pappers/Sirene + BODACC queries
-- [ ] Decide tech stack (recommendation: Python/FastAPI + Streamlit for speed, streaming-friendly)
+- [x] Decide tech stack — Python/FastAPI + Streamlit; SQLite working DB + HubSpot as GTM data store (no Supabase)
 - [ ] Scaffold repo, build pipeline demo-first
 - [ ] Pre-build the demo dataset (real signals, pre-enriched contacts)
 

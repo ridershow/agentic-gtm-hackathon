@@ -22,7 +22,7 @@ flowchart TB
         WRITE["Outreach Generation<br/>plain-French email per contact"]
     end
 
-    subgraph db["🗄️ Supabase Postgres"]
+    subgraph db["🗄️ SQLite — local working DB"]
         SIGNALS[("signals")]
         ORGS[("organizations")]
         ICP[("icp_relevance")]
@@ -31,6 +31,8 @@ flowchart TB
     end
 
     FULLENRICH["FullEnrich API<br/>(contact enrichment)"]
+
+    HUBSPOT["🧲 HubSpot CRM<br/>system of record: accounts ·<br/>contacts · outreach drafts"]
 
     subgraph app["🖥️ App Layer"]
         API["FastAPI<br/>(agent pipeline + queries)"]
@@ -51,12 +53,18 @@ flowchart TB
     CONTACTS --> WRITE
     SIGNALS --> WRITE
     WRITE --> DRAFTS
+    ORGS --> HUBSPOT
+    CONTACTS --> HUBSPOT
+    DRAFTS --> HUBSPOT
     SIGNALS --> API
     ICP --> API
     CONTACTS --> API
     DRAFTS --> API
     API --> UI
+    HUBSPOT --> UI
 ```
+
+**Storage decision (09/07):** no Supabase. SQLite (`data/gtm.db`) is the local working store for raw signals and the classification queue; **HubSpot is the system of record for GTM output** — mapped accounts, enriched contacts, and outreach drafts land there as companies/contacts/notes with the `gtm_*` custom properties. Setup and API calls: [docs/hubspot.md](hubspot.md).
 
 ## Data model (ER)
 
@@ -133,7 +141,8 @@ erDiagram
 
 | Component | Choice | Why |
 |---|---|---|
-| Database | **Supabase Postgres** (free tier) | Shared by 3-5 teammates instantly, JSONB for raw payloads, REST out of the box. Fallback: SQLite if network issues. |
+| Working DB | **SQLite** (`data/gtm.db`) | Zero setup, each teammate runs locally; raw payloads + classification queue. `DATABASE_URL` env var overrides if ever needed. |
+| System of record | **HubSpot CRM** (portal 148865690) | GTM output lives where a real sales team would work it: companies, contacts, notes + `gtm_*` custom properties. Free, shared, and a better demo story than a database. See [hubspot.md](hubspot.md). |
 | Ingestion | Python scripts + `httpx` | One-shot backfill for the hackathon (last 90 days), no cron needed today |
 | Classification | Claude (`claude-sonnet-4-6`), batched 10-20 announcements/call | Cheap, fast, structured output via tool use |
 | API layer | FastAPI | Async, streams to the UI |
@@ -226,11 +235,12 @@ Free, no auth, JSON. Standard OpenDataSoft Explore API: `where=`, `order_by=`, `
 
 ## Build order (today)
 
-1. Supabase project + run schema (15 min)
+1. ~~Supabase~~ SQLite schema via `python -m backend.db` (done)
 2. `ingest/boamp.py` — backfill script, target departments, 90 days (1-2h)
 3. `workers/classify.py` — Claude batch classification of unprocessed rows (1-2h)
 4. Sanity-check queries: "top 10 RFPs for an equipment manufacturer in dept 69" (30 min)
-5. Then plug the agent pipeline (mapping → FullEnrich → outreach) on top
+5. Plug the agent pipeline (mapping → FullEnrich → outreach) on top
+6. `sync/hubspot.py` — upsert mapped accounts + contacts, attach outreach drafts via `gtm_*` properties
 
 ## Later (post-RFP, same pattern)
 
