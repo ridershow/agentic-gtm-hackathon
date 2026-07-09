@@ -13,8 +13,8 @@
 
 ## Alex
 
-- [x] **Atlas (demo dataset)** — 23 FR extrusion plants seeded in HubSpot with siren/signals/priorities (PR #3, docs/hubspot.md). Full atlas *skill* rewrite in progress → `.claude/skills/`
-- [ ] **FullEnrich account mapping** — decision-makers per account → push into HubSpot (skill written: `enrich-accounts`; execution pending)
+- [x] **Atlas (demo dataset)** — 23 FR extrusion plants seeded in HubSpot (PR #3, docs/hubspot.md). Skills shipped in PR #5.
+- [x] **FullEnrich account mapping** — hot tier done: 7 contacts (deliverable emails) live in HubSpot, associated. Warm/watch expansion running. `backend/enrich/enrich_hot.py`
 - [ ] **Managed Agent** — monitoring + feeding, HubSpot bilateral read/write
 
 ## Jerem
@@ -33,7 +33,7 @@
 
 ## Demo flow (target)
 
-One sentence in ("je vends des rayonnages industriels, 30 salariés, Lyon") → signals (BOAMP + open data + Sillage) → account map → FullEnrich contacts → drafted outreach → swipe to approve.
+One sentence in → pre-computed atlas announced → live watch (BOAMP scored by Claude + Sillage) → priorities update → interface: swipe moved accounts (signal + evidence + contact), human qualifies. NO outreach — deliberate product choice (big-ticket, human relationships). Script: PITCH.md §Demo.
 
 ## Open questions
 

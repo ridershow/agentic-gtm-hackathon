@@ -150,75 +150,8 @@ erDiagram
 
 ## Schema
 
-```sql
--- Every buying signal, whatever the source. RFP first.
-CREATE TABLE signals (
-  id            BIGSERIAL PRIMARY KEY,
-  type          TEXT NOT NULL,        -- 'rfp' | 'icpe' | 'permit' | 'bodacc' | 'sillage'
-  source        TEXT NOT NULL,        -- 'boamp' | 'georisques' | ...
-  source_id     TEXT NOT NULL,        -- BOAMP idweb — dedup key
-  published_at  DATE,
-  deadline_at   DATE,                 -- RFP response deadline (urgency!)
-  departement   TEXT,
-  region        TEXT,
-  raw           JSONB NOT NULL,       -- full source payload, never lose data
-  -- Claude-extracted fields:
-  title         TEXT,
-  summary_fr    TEXT,                 -- plain-French, reused in UI + outreach
-  project_type  TEXT,                 -- 'construction' | 'extension' | 'renovation' | 'equipment'
-  building_type TEXT,                 -- 'warehouse' | 'factory' | 'logistics' | 'public' | ...
-  works         TEXT[],               -- ['racking','flooring','electrical',...]
-  est_value_eur NUMERIC,
-  processed_at  TIMESTAMPTZ,          -- NULL = awaiting classification
-  UNIQUE (source, source_id)
-);
+Schema SOT: `backend/db.py` (SQLite via SQLAlchemy; same tables work on Postgres if DATABASE_URL is set). Classification contract: `backend/workers/classify.py`. Do not duplicate DDL here.
 
--- Buyers, contractors, engineering firms
-CREATE TABLE organizations (
-  id      BIGSERIAL PRIMARY KEY,
-  siren   TEXT UNIQUE,
-  name    TEXT NOT NULL,
-  kind    TEXT,                       -- 'public_buyer' | 'company' | 'contractor' | 'engineering'
-  raw     JSONB
-);
-
-CREATE TABLE signal_organizations (
-  signal_id BIGINT REFERENCES signals(id),
-  org_id    BIGINT REFERENCES organizations(id),
-  role      TEXT,                     -- 'buyer' | 'winner' | 'owner' | 'contractor'
-  PRIMARY KEY (signal_id, org_id, role)
-);
-
--- Which ICP categories each signal is relevant to (Claude classification)
-CREATE TABLE icp_relevance (
-  signal_id    BIGINT REFERENCES signals(id),
-  icp_category TEXT,                  -- 'equipment' | 'envelope' | 'installer' | 'services' | 'distributor'
-  score        SMALLINT,              -- 0-100
-  reasoning    TEXT,
-  PRIMARY KEY (signal_id, icp_category)
-);
-
--- FullEnrich results
-CREATE TABLE enriched_contacts (
-  id         BIGSERIAL PRIMARY KEY,
-  org_id     BIGINT REFERENCES organizations(id),
-  full_name  TEXT, job_title TEXT, email TEXT, phone TEXT, linkedin_url TEXT,
-  source     TEXT DEFAULT 'fullenrich',
-  raw        JSONB,
-  enriched_at TIMESTAMPTZ DEFAULT now()
-);
-
--- Claude-generated outreach
-CREATE TABLE outreach_drafts (
-  id         BIGSERIAL PRIMARY KEY,
-  signal_id  BIGINT REFERENCES signals(id),
-  contact_id BIGINT REFERENCES enriched_contacts(id),
-  subject    TEXT, body TEXT,
-  created_at TIMESTAMPTZ DEFAULT now()
-);
-```
-
-Why signal-centric: adding ICPE tomorrow = one new ingestion worker writing `type='icpe'` rows. Ranking, mapping, enrichment, outreach, and UI don't change.
 
 ## BOAMP ingestion details
 
@@ -227,7 +160,7 @@ Free, no auth, JSON. Standard OpenDataSoft Explore API: `where=`, `order_by=`, `
 
 **Filter strategy for the backfill (last 90 days):**
 - `nature`/type = works + supplies (marchés de travaux et fournitures)
-- Departments: start with 2-3 target departments for the demo persona (69 Rhône + neighbors for Martine)
+- Departments: start with the demo persona's 2-3 target departments
 - Keyword/descriptor filter for industrial relevance (entrepôt, bâtiment industriel, plateforme logistique, rayonnage...) — cast wide, let Claude's classification do the precise filtering
 - Inspect exact field names in the [API console](https://boamp-datadila.opendatasoft.com/explore/dataset/boamp/api/) first — schema has fields like `idweb`, `objet`, `nomacheteur`, `code_departement`, `dateparution`, `datelimitereponse`, `descripteur_libelle`
 
