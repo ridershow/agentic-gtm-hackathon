@@ -27,4 +27,8 @@ Private app token in `.env` (`HUBSPOT_TOKEN`). Portal **148865690** (eu1, fresh 
 - Seeder code + dataset: **PR #3** (`backend/ingest/seed_atlas.py`, re-runnable upsert by siren) — data is live in the portal regardless of merge status
 - Join your BOAMP signals on `siren`; Sillage watchlist should start from the 7 hot accounts
 
-**Contacts (09/07 pm):** FullEnrich run live on all 23 accounts — 11/23 companies have >=1 verified-email contact (group-level contacts like Hydro/Constellium are associated to each of their plants). 12 accounts in needs-manual (people found but no deliverable email, or no people found: mostly micro-sites). Script: `backend/enrich/enrich_hot.py --priority hot|warm|watch`. ~53 credits total spent, 2,452 left.
+**Contacts (09/07 ~15:45): 29 contacts, 20/23 companies covered.** Two-stage waterfall:
+1. `backend/enrich/enrich_hot.py` — FullEnrich people-search + verified emails (provenance `people_search`, 15 contacts)
+2. `backend/enrich/contact_router.py` — registry loop for the rest: SIRENE dirigeants (auditors excluded) -> retry FullEnrich with the gérant's name -> push with provenance `registry` (email verified, 3) or `registry_no_email` (identity only, human finds the number, 11)
+
+Contact property `gtm_provenance` tells the rep what's verified vs to-confirm. Still empty: AFE Ham, Extol France, Koalis (registry lists corporate officers only — group-level entities; needs-manual). ~57 credits spent total, 2,448 left.
