@@ -128,4 +128,4 @@ The outreach email references a real, specific event: *"votre permis pour l'exte
 
 ## Skills (the engine's brain — .claude/skills/)
 
-`/goal` orchestrates the whole engine from one plain-language sentence. It chains: `atlas` (map 100% of the finite market, evidence per line) → `enrich-accounts` (FullEnrich decision-makers, credit-aware) → `signal-watch` (BOAMP + Sillage → HubSpot priorities, corroboration model) → `approach-draft` (signal + contact → first touch, human swipe gate). Each skill runs standalone too. Read the skill before reimplementing anything it covers.
+`/goal` orchestrates the whole engine from one plain-language sentence. It chains: `atlas` (map 100% of the finite market, evidence per line) → `enrich-accounts` (FullEnrich decision-makers, credit-aware) → `signal-watch` (BOAMP + Sillage → HubSpot priorities, corroboration model). Each skill runs standalone too. Read the skill before reimplementing anything it covers.
