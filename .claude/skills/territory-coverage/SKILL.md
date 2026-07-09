@@ -1,5 +1,5 @@
 ---
-name: atlas
+name: territory-coverage
 description: Map 100% of a finite B2B market — every company that could buy the user's product — with evidence per line and an honest coverage claim. Use when onboarding a new user profile, when asked to "map the market", "build the account list", "find all the X in France", or as step 1 of /goal. Output = organizations table + HubSpot companies with siren, ready for enrichment and signal watching.
 ---
 
