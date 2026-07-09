@@ -9,7 +9,7 @@ Private app token in `.env` (`HUBSPOT_TOKEN`). Portal **148865690** (eu1, fresh 
 | `gtm_signal` | textarea | Latest buying signal (BOAMP / open data / Sillage) |
 | `gtm_signal_date` | date | When the signal fired |
 | `gtm_priority` | select: hot / warm / watch | Agent ranking |
-| `gtm_approach_draft` | textarea | Drafted first touch, pending human swipe |
+| `gtm_approach_draft` | textarea | UNUSED — outreach cut from product 09/07 pm (deliberate positioning choice). Property exists in portal, nothing writes it. |
 
 ## Core calls
 
