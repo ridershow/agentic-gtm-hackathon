@@ -1,11 +1,11 @@
 ---
 name: goal
-description: The full GTM engine, end to end — from a one-sentence business description to a live, monitored pipeline in HubSpot. Use when onboarding a new user ("je vends des rayonnages industriels, 30 salariés, Lyon"), when asked to "run the engine", "set up my GTM", or for the demo. Orchestrates atlas → enrich-accounts → signal-watch → approach-draft.
+description: The full GTM engine, end to end — from a one-sentence business description to a live, monitored pipeline in HubSpot. Use when onboarding a new user ("je vends des rayonnages industriels, 30 salariés, Lyon"), when asked to "run the engine", "set up my GTM", or for the demo. Orchestrates atlas → enrich-accounts → signal-watch.
 ---
 
 # /goal — the engine, end to end
 
-Input: **one sentence in plain language.** Output: a mapped market, enriched contacts, live signal watching and drafted approaches waiting for a swipe. Zero digital skills required from the user.
+Input: **one sentence in plain language.** Output: a mapped market, enriched contacts and live signal watching. Zero digital skills required from the user.
 
 ## Step 0 — Profile extraction
 
@@ -25,17 +25,12 @@ Top 3 decision-makers per account via FullEnrich → HubSpot contacts. Emails ev
 
 BOAMP + open data + Sillage → scored, matched, written to `gtm_signal`/`gtm_priority`. Register the hot+warm tier as the Sillage watchlist. In production this step re-runs on schedule (managed agent); on demand it runs once and reports.
 
-## Step 4 — Approach (skill: `approach-draft`)
-
-For every hot account with a signal and a contact: draft the first touch → `gtm_approach_draft`, pending human swipe.
-
 ## Final briefing (what the user actually sees)
 
 5 lines max, owner language:
-"Votre marché : N acteurs, cartographié. M contacts identifiés. Cette semaine, K comptes ont bougé : [account — pourquoi c'est le moment]. J drafts prêts — swipez pour approuver."
+"Votre marché : N acteurs, cartographié. M contacts identifiés. Cette semaine, K comptes ont bougé : [account — pourquoi c'est le moment, qui contacter]."
 
 ## Hard rules
 
-- Nothing is ever sent without a human swipe.
 - Every number in the briefing must be queryable in HubSpot (no invented counts).
 - If a step fails, say which and continue with what exists — a partial pipeline that's honest beats a full one that lies.
