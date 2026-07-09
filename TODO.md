@@ -9,7 +9,7 @@
 - [x] Anthropic API keys — redeemed
 - [x] HubSpot — portal 148865690 + service key wired, smoke-tested, custom props created (`docs/hubspot.md`)
 - [x] Sillage — key wired + tested (`docs/sillage-integration.md`). ⚠️ ask Sillage team to enable content-requests on the workspace
-- [ ] Gamma API key — **Alex**
+- [x] Gamma API key — wired + validated (`docs/gamma.md`)
 
 ## Alex
 
