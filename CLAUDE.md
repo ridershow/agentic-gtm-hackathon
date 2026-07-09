@@ -125,3 +125,7 @@ The outreach email references a real, specific event: *"votre permis pour l'exte
 - **Most creative GTM angle** — lead with ICPE (environmental permits as buying signals)
 - **Best use of Gamma** — auto-generate a Gamma "project brief" per mapped account
 - **LinkedIn / X virality** — tag Anthropic, Sillage, FullEnrich; #agenticgtm on X
+
+## Skills (the engine's brain — .claude/skills/)
+
+`/goal` orchestrates the whole engine from one plain-language sentence. It chains: `atlas` (map 100% of the finite market, evidence per line) → `enrich-accounts` (FullEnrich decision-makers, credit-aware) → `signal-watch` (BOAMP + Sillage → HubSpot priorities, corroboration model) → `approach-draft` (signal + contact → first touch, human swipe gate). Each skill runs standalone too. Read the skill before reimplementing anything it covers.
