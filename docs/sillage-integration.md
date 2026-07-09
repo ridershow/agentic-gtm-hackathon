@@ -51,3 +51,13 @@ In the streamed agent steps, show a distinct "Sillage check" phase per top accou
 - [ ] Test signal density on 5 real French mid-size logistics/industrial companies (the *buyer* side)
 - [ ] Test on 2 small SMBs to confirm the thin-coverage hypothesis (informs how we frame it)
 - [ ] Fallback if API is watch-list-only (no on-demand query): pre-register the demo dataset accounts at the start of the hackathon so signals accumulate all day
+
+---
+
+## Wiring status (09/07, tested live)
+
+- Key in `.env` (`SILLAGE_API_KEY`, `sk_live_` direct-client). Base `https://api.getsillage.com`, Bearer auth.
+- `GET /api/v2/top-account-list/accounts` → **200** (empty, fresh workspace)
+- `GET /api/v2/content-requests` → **403 "Top account content requests is not enabled for this workspace"** → ask the Sillage team on site to enable it
+- Key v2 endpoints: `PUT /api/v2/persona` · `POST /api/v2/top-account-list/accounts` (add accounts) · `POST /api/v2/contents/query` · `POST /api/v2/enrich-company-mapping` · `GET /api/v2/company-mappings`
+- Docs: https://www.getsillage.com/docs/api (OpenAPI spec available) · every docs page has "Copy Markdown". MCP is separate (login-based, no API key) — 8 agent types, playbooks readable via `get_signal_playbook`.
