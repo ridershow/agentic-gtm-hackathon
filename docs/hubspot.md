@@ -9,7 +9,8 @@ Private app token in `.env` (`HUBSPOT_TOKEN`). Portal **148865690** (eu1, fresh 
 | `gtm_signal` | textarea | Latest buying signal (BOAMP / open data / Sillage) |
 | `gtm_signal_date` | date | When the signal fired |
 | `gtm_priority` | select: hot / warm / watch | Agent ranking |
-| `gtm_approach_draft` | textarea | Drafted first touch, pending human swipe |
+| `gtm_contact_status` | select: covered / manual_search | Contact coverage after the enrichment waterfall |
+| `gtm_approach_draft` | textarea | UNUSED — outreach cut from product 09/07 pm (deliberate positioning choice). Property exists in portal, nothing writes it. |
 
 ## Core calls
 
@@ -20,15 +21,15 @@ Private app token in `.env` (`HUBSPOT_TOKEN`). Portal **148865690** (eu1, fresh 
 
 ## Current state (09/07 ~13:15) — READ ME, other Claude 👋
 
-**HubSpot is already seeded with the demo atlas: 23 companies live** (French aluminium-extrusion plants, public sources). Properties set per company: `siren` (join key for BOAMP/open data), `gtm_signal` (investment detail when known), `gtm_priority` (**7 hot / 5 warm / 11 watch**), domain (22/23), city, annualrevenue, description (type + legal entity + group).
+**HubSpot holds the demo atlas: 23 companies + 15 unique contacts (24 associations) with DELIVERABLE emails** (French aluminium-extrusion plants, public sources). Properties set per company: `siren` (join key for BOAMP/open data), `gtm_signal` (investment detail when known), `gtm_priority` (**7 hot / 5 warm / 11 watch**), domain (22/23), city, annualrevenue, description (type + legal entity + group).
 
 - Query the base: `POST /crm/v3/objects/companies/search` with filter `siren HAS_PROPERTY`
 - Hot queue: filter `gtm_priority EQ hot`
 - Seeder code + dataset: **PR #3** (`backend/ingest/seed_atlas.py`, re-runnable upsert by siren) — data is live in the portal regardless of merge status
 - Join your BOAMP signals on `siren`; Sillage watchlist should start from the 7 hot accounts
 
-## Sync module (09/07 ~15:00)
+**Contacts (09/07 ~15:45): 29 contacts, 20/23 companies covered.** Two-stage waterfall:
+1. `backend/enrich/enrich_hot.py` — FullEnrich people-search + verified emails (provenance `people_search`, 15 contacts)
+2. `backend/enrich/contact_router.py` — registry loop for the rest: SIRENE dirigeants (auditors excluded) -> retry FullEnrich with the gérant's name -> push with provenance `registry` (email verified, 3) or `registry_no_email` (identity only, human finds the number, 11)
 
-`python -m backend.sync.hubspot` pushes SQLite GTM output to the portal: orgs with >= 1 ICP-relevant signal become companies (match by `siren`, else exact name) with `gtm_signal`, `gtm_signal_date`, `gtm_priority` (max ICP score: >=70 hot / >=50 warm / else watch) and `gtm_approach_draft`; enriched contacts upsert by email + associate. `--dry-run` / `--limit N` / `--check` supported; re-runnable without duplicates (beware ~15s HubSpot search-index lag right after a create).
-
-**Portal heads-up:** 3 test BOAMP buyers synced (SPL Mobilités, Lycée Robert Garnier, CHU Lyon — all hot). The full local queue is **69 orgs (17 hot)** — run the bare command when we want them all in; it will triple the hot queue, so coordinate before demo screenshots.
+Contact property `gtm_provenance` tells the rep what's verified vs to-confirm. Companies with no reachable contact are flagged `gtm_contact_status = manual_search` (4: AFE Saint-Florentin, AFE Ham, Extol, Koalis — registry lists corporate officers/auditors only). ~57 credits spent total, 2,448 left.

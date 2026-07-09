@@ -13,16 +13,15 @@
 
 ## Alex
 
-- [x] **Atlas (demo dataset)** — 23 FR extrusion plants seeded in HubSpot with siren/signals/priorities (PR #3, docs/hubspot.md). Full atlas *skill* rewrite in progress → `.claude/skills/`
-- [ ] **FullEnrich account mapping** — decision-makers per account → push into HubSpot
+- [x] **Atlas (demo dataset)** — 23 FR extrusion plants seeded in HubSpot (PR #3, docs/hubspot.md). Skills shipped in PR #5.
+- [x] **FullEnrich account mapping** — hot tier done: 7 contacts (deliverable emails) live in HubSpot, associated. Warm/watch expansion running. `backend/enrich/enrich_hot.py`
 - [ ] **Managed Agent** — monitoring + feeding, HubSpot bilateral read/write
 
 ## Jerem
 
-- [x] BOAMP ingestion scaffold (signals table, SQLite/Postgres)
-- [x] Claude classification worker — live, 167 RFPs scored: 90 ICP-relevant, 35 hot (score ≥60). Re-run: `python -m backend.workers.classify`
+- [x] ~~BOAMP ingestion~~ — **KILLED 09/07 ~17h (Alex): no relevant tenders for this vertical.** Code stays in backend/ingest/boamp.py, unused. 3 public-buyer companies in HubSpot to archive manually (CHU Lyon, Lycée R. Garnier, SPL Mobilités).
 - [ ] Clean HubSpot + connectors management
-- [ ] Sillage intents from FullEnrich output → HubSpot
+- [x] Sillage end-to-end: persona + watchlist rebuilt + content fetch + 4 agents re-run. **3 persona-fit leads produced (plant/ops directors) -> enriched by FullEnrich -> HubSpot** (provenance sillage/sillage_enriched). Signal detections = 0 on this vertical; 2 questions still open with Sillage team (contents flag, persona 428/469).
 
 ## Afternoon (shared, timeboxed)
 
@@ -34,7 +33,7 @@
 
 ## Demo flow (target)
 
-One sentence in ("je vends des rayonnages industriels, 30 salariés, Lyon") → signals (BOAMP + open data + Sillage) → account map → FullEnrich contacts → drafted outreach → swipe to approve.
+One sentence in → pre-computed atlas announced → live watch (BOAMP scored by Claude + Sillage) → priorities update → interface: swipe moved accounts (signal + evidence + contact), human qualifies. NO outreach — deliberate product choice (big-ticket, human relationships). Script: PITCH.md §Demo.
 
 ## Open questions
 

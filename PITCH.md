@@ -1,45 +1,38 @@
-# Agentic GTM Hackathon — Problem, Approach, Business Impact
+# Pitch — Problem, Approach, Business Impact
 
 ## Problem
 
-Europe runs on industrial SMBs — manufacturers and service providers selling physical products to factories and warehouses: racking, industrial doors, conveyors, packaging lines, cooling, maintenance. Most were founded 20-40 years ago and are still run by their founders. They are profitable, respected in their niche… and invisible online.
+Europe runs on industrial SMBs — manufacturers selling physical products and services to factories and warehouses. Most were founded 20-40 years ago, still founder-led. Profitable, respected in their niche, invisible online.
 
-Their market is **capped**: the number of factories and warehouses in Europe is finite and known. You can't grow the pie. Growth comes from exactly one thing — **being there at the rare moment a buyer has a live project**: a new site, an extension, a production line upgrade, a relocation. Miss that window, and the deal goes to the incumbent supplier for the next 10-15 years.
+Their market is **finite**: the factories and warehouses that could ever buy from them are countable and known. You can't grow the pie. Growth comes from one thing — **being there at the rare moment an account has a live project**: a new site, an extension, a line upgrade. Miss the window and the deal belongs to the incumbent for 10-15 years.
 
-Today these companies find that window by accident. They prospect the way they did in 1995: trade shows, professional associations, word of mouth, waiting for the phone to ring. No CRM, no LinkedIn, no marketing team, no intent data. Meanwhile, the signals that reveal a live industrial project — building permits, environmental permit filings, company registry events, hiring surges — are **published in open data, in plain sight, and almost nobody in GTM exploits them**.
-
-The result: millions of European industrial SMBs systematically miss the buying moments happening in their own region, in their own market.
+Their sales teams are 1-5 people covering hundreds of accounts. Nobody can read tenders, permits, registry events and hiring pages for 200 companies every week. So the signals — **published in open data, in plain sight, exploited by nobody in GTM** — go unseen, and the buying moments are found by accident: trade shows, word of mouth, a phone that rings too late.
 
 ## High-Level Approach
 
-An AI agent that turns open data into a pipeline — with zero digital skills required from the user.
+**A monitoring engine for finite markets.** The account universe is mapped once, completely, with evidence. Then the engine watches all of it, continuously, and surfaces every signal — including the weak ones a human skims past — in one interface.
 
-**Input:** one sentence in plain French. *"Je vends des rayonnages industriels, 30 salariés, basé à Lyon."*
+1. **Atlas** (Claude) — from a one-sentence business description, map 100% of the addressable market: registry sweep + discovery nets + saturation proof. Not a sample. The whole universe.
+2. **Enrich** (FullEnrich) — decision-makers per account, verified emails, phones on hot accounts.
+3. **Watch** (open data + Sillage + Claude) — public tenders (BOAMP), building/environmental permits, registry events, hiring surges, LinkedIn intent. Claude scores every raw signal against the ICP; administrative proof + market buzz agreeing = hot account, surfaced now.
+4. **Surface** — one interface: which accounts moved, why it matters, who to call. Weak signals resurface instead of dying in a feed.
 
-**Output:** a ranked list of live industrial projects in the region, the map of stakeholders around each project, enriched decision-maker contacts, and a ready-to-send outreach email referencing the specific project.
+**Deliberately no AI outreach.** Industrial deals are big-ticket and human: every approach is custom, relationship-based. We don't draft your emails — we make sure you never miss the moment to pick up the phone. (This is a product choice; it's also why reps trust it.)
 
-The agent works signal-first — it doesn't search for companies hoping they need the product; it detects **proof that a project is happening**, then maps everyone involved:
-
-1. **Profile extraction** (Claude) — parse the one-sentence description into a product category, buyer profile, and region
-2. **Signal detection** (French open data) — scan for live buying signals:
-   - Building permits for industrial/warehouse buildings (SITADEL)
-   - **Environmental permit filings (ICPE)** — every factory expansion legally requires one, publicly published, unexploited by GTM tooling
-   - New establishment openings, capital increases (BODACC / Sirene)
-   - Production and warehouse hiring surges (France Travail)
-   - Digital intent signals (Sillage)
-3. **Account mapping** (Claude reasoning) — for each project, identify the ecosystem: site owner/operator, general contractor, engineering firm — and rank who to contact first, with reasoning
-4. **Contact enrichment** (FullEnrich) — decision-maker names, emails, phone numbers
-5. **Outreach generation** (Claude) — a short, plain-French email per contact that references the specific project ("votre permis pour l'extension de 12 000 m² à Saint-Nazaire…")
-
-Built France-first on French open data — and expandable by design: every EU country maintains equivalent registries (company registers, building permits, environmental permits).
+France-first (best open data in Europe), expandable by design: every EU country keeps equivalent registries.
 
 ## Business Impact
 
-**Increase revenue from open-data intent signals and new relationships — replacing the traditional marketing tactics (trade shows, associations, word of mouth) that founder-led industrial SMBs rely on today.**
+- **Coverage multiplies.** A 2-person sales team effectively watches its entire territory, continuously. The engine reads everything; humans do what only humans can — the relationship.
+- **Revenue currently lost by default gets caught.** Detecting a project at permit/tender stage puts the SMB in the conversation months before equipment decisions close — before competitors know the project exists. In a finite market, one caught window = a 10-15 year customer.
+- **Weak signals stop dying.** A hiring post, a small registry change, a tender award to a partner — individually ignorable, together a live project. The corroboration model surfaces the pattern.
+- **Massive underserved segment.** ~320K industrial companies in France, 33M SMBs in the EU (99.8% of enterprises); only 58% of EU SMEs reach basic digital intensity vs 91% of large firms (Eurostat). Every GTM tool assumes a digitally-native user with an infinite TAM — this segment is neither.
 
-Concretely:
+## Demo (2 min)
 
-- **Catch revenue that is currently lost by default.** In a capped market every missed buying window is a deal locked up by a competitor for 10-15 years. Detecting projects at permit stage puts the SMB in the conversation 6-18 months before equipment decisions are finalized — before competitors even know the project exists.
-- **Compress prospecting from hours to seconds.** What a (nonexistent) marketing team would spend 2 hours researching per account — finding the project, identifying stakeholders, hunting emails — the agent does in 90 seconds, at the cost of an API call.
-- **Replace tactic spend with signal precision.** A trade show costs €5-15k per event for a handful of unqualified conversations. The agent surfaces prospects with a *proven, dated, documented* buying signal — a fundamentally warmer conversation at near-zero marginal cost.
-- **A massive, underserved market.** ~4 million French SMBs, ~25 million across the EU — the overwhelming majority spend €0 on digital prospecting today, not because they don't need pipeline, but because every existing tool assumes a digitally-native user. Zero setup, one sentence in, pipeline out.
+Persona: a supplier of industrial equipment and services to **aluminium-extrusion plants** — a real finite market: 23 plants in France, mapped and live in HubSpot with enriched decision-makers.
+
+1. One sentence in, plain French. Engine confirms the reading, announces the pre-computed atlas: "23 accounts, 100% of the French market, mapped this morning — with proof."
+2. The watch runs live: real BOAMP tenders scored by Claude, Sillage signals, priorities updating (watch → warm → hot with the why).
+3. The interface: swipe through moved accounts — signal, evidence link, enriched contact. Human qualifies with one gesture.
+4. Close: "Your whole market, watched. You'll never miss the window again."
