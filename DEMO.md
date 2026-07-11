@@ -2,15 +2,23 @@
 
 Everything shown is real data in the live HubSpot portal. Pre-computed steps are announced as pre-computed, never faked.
 
-## PITCH (1:30) — deck
+## PITCH (1:30) — 7 slides. Format: problem → approach + scheme → expected business impact.
 
-**Problem (0:00-0:25).** "Industrial SMBs sell in finite markets. Our real demo case: a supplier to aluminium-extrusion plants — his entire addressable market in France is 23 factories. Miss a buying window, lose the account for 15 years. And these buyers are invisible: we watched them on LinkedIn for 180 days. Zero posts. Every intent tool on the market is blind here."
+~225 words ≈ 88s at pitch pace. No ad-libs — every added sentence eats the impact slide.
 
-**Goal 1 — Territory Coverage (0:25-0:45).** One sentence in, the engine maps 100% of the market: registry sweep + discovery nets + saturation proof. 23 accounts, evidence per line, live in HubSpot.
+**S1 · Title (0:00-0:08).** "Industrial SMBs also need GTM. We built the engine that gives it to them."
 
-**Goal 2 — Company Enrichment (0:45-1:05).** Provenance-tagged waterfall: FullEnrich found 15 verified emails → the registry added 15 (in an SMB the gérant IS the buyer) → Sillage found the plant director both others missed. 3 accounts flagged for human search — never silently dropped.
+**S2 · Not sexy (0:08-0:18).** "Industrial SMBs are not sexy. Founded decades ago, founder-led, profitable, respected in their niche."
 
-**Goal 3 — Signal Watcher (1:05-1:30).** Open data + Sillage + Claude scoring each signal against the ICP. Corroboration model: administrative proof + market buzz agreeing = hot. Real capex signals on our hot accounts: a €50M foundry, a plant doubling, a new press. Managed agents (watcher + cleaner) keep the base fed and trustworthy on schedule.
+**S3 · Not online (0:18-0:33).** "And they barely live on the internet: 58% of EU SMEs reach basic digital intensity, versus 91% of large firms. We watched one industrial vertical on LinkedIn for 180 days — zero posts. Every GTM tool relies on LinkedIn. What about the rest?"
+
+**S4 · Big chunk of the economy + iceberg (0:33-0:50).** "Yet: 2.2 million industrial companies in Europe, €2.5 trillion of value added, 30 million jobs — 99% of those companies are SMBs. And their market is finite: miss a buying window, lose the account for fifteen years. GTM tools don't cover this bottom of the iceberg. Here's how we do."
+
+**S5 · Who we build for (0:50-1:05).** "A founder who knows his market by heart. Shirt, not hoodie. Happy with the status quo — but he knows AI can help. So the engine stays invisible: a custom interface surfaces only what's needed. And deliberately, no AI outreach — his deals are human, his relationships stay his."
+
+**S6 · The scheme (1:05-1:20).** "One sentence in, Claude chains three goals: map 100% of the finite market; enrich every account — FullEnrich, then the registry, then Sillage, each catches what the others miss; then watch everything — tenders, permits, registry events, Claude scores each signal: proof plus buzz equals hot. All in HubSpot, on schedule."
+
+**S7 · Expected business impact (1:20-1:30).** "A trade show costs €5-15K for a handful of unqualified conversations. The engine surfaces dated, documented buying signals at near-zero marginal cost — on 100% of the territory, in auto mode. New revenue, on top of the tactics that already work."
 
 ## DEMO (1:30) — Lovable, live
 
@@ -22,10 +30,15 @@ Everything shown is real data in the live HubSpot portal. Pre-computed steps are
 
 ## Q&A ammo (2:00)
 
+Answer in ≤3 sentences, then stop — let them ask the next one. Q&A is where AI depth and external-data depth get scored; steer there if given the chance.
+
+- **Where's the AI, really?** (= AI depth, 25 pts) Claude is three things here: the **orchestrator** — the whole engine is versioned skills chained by `/goal` from one plain-language sentence; the **scorer** — every raw signal (tender, permit, registry event) is judged against the ICP semantically, not by keywords; and the **janitor** — managed agents (watcher + cleaner) run on schedule to keep the CRM fed and trustworthy. No AI-generated content ships to a prospect — by design.
 - **Why no outreach?** Product choice: big-ticket industrial deals are human and custom. The engine maximizes what AI does best (coverage, memory, timing) and leaves relationships to people. It's also why reps trust it.
-- **Sillage found nothing?** On LinkedIn-silent verticals, zero *posts* is the expected result — and the thesis. But Sillage's account mapping found persona-fit plant directors that enrichment and registry missed. We use every layer for what it's good at.
-- **Eval?** The atlas is graded against a hand-built ground truth of the same market (real client work): coverage, sentinel recall, saturation matrix.
-- **Scalable?** Every EU country keeps equivalent registries. The skills are versioned; the vertical is a parameter.
+- **Sillage found nothing?** On LinkedIn-silent verticals, zero *posts* is the expected result — and the thesis. But Sillage's account mapping found the Extol plant director that both FullEnrich and the registry missed. We use every layer for what it's good at.
+- **How do you know the atlas is complete?** Saturation proof: independent discovery nets (registry codes, trade directories, competitor customer lists) must stop yielding new names. Graded against a hand-built ground truth of this exact market: coverage, sentinel recall.
+- **Business model?** Setup fee for the atlas (one-time, high perceived value — it's their whole market on a map), then monthly monitoring per territory. Recurring by nature: signals never stop.
+- **Scalable beyond France?** France-first because it has the best open data in Europe, but every EU country keeps equivalent registries. The vertical and the country are parameters of the skills.
+- **Why HubSpot?** The engine writes into the CRM the sales team already lives in — no new tool to adopt. HubSpot is the source of truth; the swipe interface is just a lens on it.
 
 ## Fallbacks
 
