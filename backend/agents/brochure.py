@@ -6,6 +6,11 @@ posts the URL back on the company as a note. No invented specs, ever.
 
 The Lovable "Prepare meeting" button triggers this flow.
 
+The supplier's brand and offer copy are CONFIG, not code: set BROCHURE_BRAND /
+BROCHURE_BRAND_STYLE in .env and drop the real offer copy in
+backend/agents/offer.local.md (gitignored). Without them, a fictional sample
+offer is used so the flow stays demoable.
+
 Usage:
     python -m backend.agents.brochure --company "Sepalumic"
 """
@@ -13,6 +18,7 @@ Usage:
 import argparse
 import os
 import time
+from pathlib import Path
 
 import httpx
 from dotenv import load_dotenv
@@ -22,25 +28,37 @@ load_dotenv()
 HS = "https://api.hubapi.com"
 GAMMA = "https://public-api.gamma.app/v1.0/generations"
 
-# Offer copy: the supplier brochure v1 (source: example.invalid,
-# no invented specs). Brand: the supplier orange #f7941d / red #d93a26 / dark #24282e.
-OFFER = """**the supplier — Solutions textiles haute température pour l'extrusion d'aluminium**
-ProductA · ProductB · ProductC · ProductD — example.invalid
+BRAND = os.environ.get("BROCHURE_BRAND", "Atelier Nordal (sample brand)")
+TAGLINE = os.environ.get("BROCHURE_TAGLINE",
+                         "Composants haute température pour lignes d'extrusion")
+BRAND_STYLE = os.environ.get(
+    "BROCHURE_BRAND_STYLE",
+    "Neutral industrial brand. Dark slate headings, one restrained accent color, "
+    "light background. Industrial imagery only (conveyor lines, extrusion, technical "
+    "textiles). French language. Keep every product name, spec, name and figure "
+    "EXACTLY as written.")
 
-**Le convoyage du profilé chaud, sans marquage.** Sur une table d'extrusion, une bande trop aérée et mal dimensionnée s'écrase sous le poids des profilés lourds. En intégrant les technologies de tissage haute densité de a partner brand, the supplier produit des bandes plus denses et plus compactes que les standards du marché, associées à ses gammes historiques de feutres, bandes et joints haute température de 200 à 1000 °C.
+# Real offer copy lives in offer.local.md (gitignored, per client/supplier).
+# The fallback below is FICTIONAL sample copy — demo plumbing, not a real offer.
+_OFFER_FILE = Path(__file__).with_name("offer.local.md")
+SAMPLE_OFFER = """**{brand} — {tagline}**
 
-**Une solution à chaque poste de votre ligne, de la presse à l'emballage :**
-- Gamme PBO la gamme partenaire — hot-end, au plus près de la presse (jusqu'à 600 °C)
-- Bandes sans fin la gamme partenaire — PBO ou aramide, tissage haute densité, tables de sortie, zéro marquage
-- ProductA 600 — bande multicouche inox + aramide régénéré, stabilité dimensionnelle (jusqu'à 1400 °C inox)
-- ProductB Contact — habillage des rouleaux de transport, évite marques et défauts de convoyage
-- ProductC Préox / SS — feutres découpés sur mesure pour barres de transfert et zones de refroidissement
+**Le convoyage du profilé chaud, sans marquage.** Bandes, feutres et joints haute
+température fabriqués sur mesure pour chaque poste de la ligne, de la presse à
+l'emballage.
 
-**Vous utilisiez les solutions de a partner brand ? Votre référence la gamme partenaire existe toujours.** Depuis l'acquisition des machines haute température de a partner brand (janvier 2025), la technologie, la recette et la qualité de la marque britannique perdurent dans les ateliers the supplier à France.
+**Une solution à chaque poste de votre ligne :**
+- Bandes sans fin haute densité — tables de sortie, zéro marquage
+- Habillage de rouleaux — évite marques et défauts de convoyage
+- Feutres découpés sur mesure — barres de transfert et zones de refroidissement
 
-**L'alliance de deux savoir-faire** : +50 ans d'expertise thermique the supplier (PBO, para-aramide, préox) × la technologie de tissage la gamme partenaire. Fabrication 100 % française, 600 références, 300 clients. Chaque référence est fabriquée sur mesure : largeur, longueur, épaisseur et fibre adaptées à votre ligne.
+**Sur mesure** : largeur, longueur, épaisseur et matière adaptées à votre ligne.
 
-**Votre contact : ***removed***, Managing Director — ***removed*** — the supplier, ***removed*** — ***removed*****"""
+*(Copy d'exemple fictive — remplacer par l'offre réelle du fournisseur dans
+offer.local.md.)*"""
+
+OFFER = (_OFFER_FILE.read_text() if _OFFER_FILE.exists()
+         else SAMPLE_OFFER.format(brand=BRAND, tagline=TAGLINE))
 
 
 def hs_headers():
@@ -74,8 +92,8 @@ def compose(comp, contacts):
                     + (f" · {c['email']}" if c.get("email") else " · phone/email via manual search")
                     for c in contacts) or "- Decision-makers flagged for manual search"
     signal = p.get("gtm_signal") or "No dated signal on file — discovery meeting."
-    return f"""# the supplier — Brief de rencontre : {p['name']}
-Solutions textiles haute température pour l'extrusion d'aluminium · {p.get('city') or ''} · priorité : {p.get('gtm_priority') or 'watch'}
+    return f"""# {BRAND} — Brief de rencontre : {p['name']}
+{TAGLINE} · {p.get('city') or ''} · priorité : {p.get('gtm_priority') or 'watch'}
 ---
 # Pourquoi maintenant — leur projet
 {signal}
@@ -84,17 +102,16 @@ C'est la fenêtre : les décisions autour de ce projet se prennent maintenant. A
 # Qui vous rencontrez
 {who}
 ---
-# L'offre the supplier, mappée sur leur ligne
+# L'offre {BRAND}, mappée sur leur ligne
 {OFFER}
 ---
 # Angles de conversation
 - Ouvrir sur LEUR projet (l'investissement ci-dessus), pas sur nous, dans la première minute.
-- Si leur ligne utilisait des références a partner brand : elles existent toujours, fabriquées à France.
 - Marché fini : l'objectif du rendez-vous est la relation, pas le closing.
 - Next step à proposer : envoi des caractéristiques de leur ligne au bureau d'études, ou visite de site calée sur leur calendrier projet.
 ---
 # À propos de ce document
-Généré par le GTM engine depuis les données CRM live (signal daté, contacts, preuves). Copy produit : brochure the supplier (source example.invalid). Aucune spec inventée.
+Généré par le GTM engine depuis les données CRM live (signal daté, contacts, preuves). Copy produit : fournie par le fournisseur (offer.local.md). Aucune spec inventée.
 """
 
 
@@ -108,7 +125,7 @@ def main():
         r = client.post(GAMMA, headers={"X-API-KEY": os.environ["GAMMA_API_KEY"]},
                         json={"inputText": text, "textMode": "preserve", "format": "document",
                               "numCards": 6,
-                              "additionalInstructions": "Brand: the supplier. Colors: orange #f7941d as primary accent, red #d93a26 sparingly, dark #24282e for headings, light background. Industrial textile/aluminium-extrusion imagery only (conveyor belts, extrusion lines, technical weaving). French language. Keep every product name, temperature spec, name and figure EXACTLY as written."})
+                              "additionalInstructions": f"Brand: {BRAND}. {BRAND_STYLE}"})
         gid = r.json()["generationId"]
         print("generation", gid)
         url = None

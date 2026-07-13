@@ -43,5 +43,5 @@ Answer in ≤3 sentences, then stop — let them ask the next one. Q&A is where 
 ## Fallbacks
 
 - HubSpot connector slow in UI → `src/data/accounts.json` (same shape)
-- Gamma slow/offline on stage → pre-generated brochure tab: [removed]
+- Gamma slow/offline on stage → keep a pre-generated brochure open in a tab
 - Claude Code offline → screen recording (YouTube link in README)

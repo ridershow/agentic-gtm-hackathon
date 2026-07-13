@@ -7,3 +7,4 @@ data/
 .DS_Store
 .streamlit/secrets.toml
 logs/
+backend/agents/offer.local.md
